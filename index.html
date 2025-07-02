@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renamed Icons Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        #icons-container {
+            display: grid;
+            /* Allow items to grow/shrink, but ensure a minimum width */
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .icon-item {
+            text-align: center;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            /* Removed min-height to allow dynamic sizing */
+            box-sizing: border-box;
+        }
+        .icon-item h2 {
+            font-size: 0.9em; /* Reduced font size for the title */
+            color: #0056b3;
+            margin-top: 0;
+            margin-bottom: 10px;
+            white-space: nowrap; /* Keep title on a single line */
+            overflow: hidden; /* Hide overflow content */
+            text-overflow: ellipsis; /* Add ellipsis for overflowed text */
+            width: 100%; /* Ensure the title takes full width to allow ellipsis */
+        }
+        .icon-item img {
+            max-width: 100px;
+            max-height: 100px;
+            height: auto;
+            object-fit: contain;
+            margin-bottom: 10px;
+            background-color: #eee;
+            padding: 5px;
+            border-radius: 4px;
+        }
+        .icon-item p {
+            font-size: 0.75em;
+            color: #555;
+            margin: 0;
+            word-break: break-word;
+            flex-grow: 1;
+            overflow: visible; /* Ensure all content is visible */
+            text-overflow: clip; /* Ensure no ellipsis for descriptions */
+            display: block; /* Revert to block display for normal text flow */
+            -webkit-line-clamp: unset; /* Remove line clamping */
+            -webkit-box-orient: unset; /* Remove box orient */
+            line-height: normal; /* Revert to normal line height */
+            max-height: unset; /* Remove max height constraint */
+        }
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Active Skills Icons and Descriptions</h1>
+
+    <div id="icons-container">
+        <p class="error-message" id="loading-message">Loading icons...</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const iconsContainer = document.getElementById('icons-container');
+            const loadingMessage = document.getElementById('loading-message');
+            const jsonFilePath = 'ActiveSkills.json';
+            const renamedPicsFolder = 'pics/'; // Path to your renamed images
+
+            try {
+                // 1. Fetch the JSON data
+                const response = await fetch(jsonFilePath);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const activeSkillsData = await response.json();
+
+                // Clear loading message
+                loadingMessage.remove();
+
+                // 2. Prepare a list of existing image files in renamedpics for quick lookup
+                // In a real server environment, you'd fetch this from the server.
+                // For a local setup, we'll assume the Node.js script has done its job
+                // and just try to load the image. A more robust local solution
+                // would be to use the Node.js script to list available files
+                // and inject them into a JS variable here, similar to the previous example.
+                // For now, we'll just try to construct the path and if the image
+                // doesn't exist, it will show a broken image icon.
+
+                // 3. Iterate through JSON data and create elements
+                activeSkillsData.forEach(skill => {
+                    // Check if Icon_DDSFile exists and is a string
+                    if (skill.Icon_DDSFile && typeof skill.Icon_DDSFile === 'string') {
+                        // Extract filename from the Icon_DDSFile path
+                        // e.g., "Art/2DArt/SkillIcons/MemoryIconMonsterNoDrops.dds" -> "MemoryIconMonsterNoDrops"
+                        const baseFilename = skill.Icon_DDSFile.split('/').pop().replace('.dds', '');
+
+                        // Construct the expected PNG filename
+                        const pngFilename = baseFilename + '.png';
+                        const imagePath = renamedPicsFolder + pngFilename;
+
+                        const itemDiv = document.createElement('div');
+                        itemDiv.classList.add('icon-item');
+
+                        const nameH2 = document.createElement('h2');
+                        nameH2.textContent = skill.DisplayedName || 'No Name'; // Use DisplayedName from JSON
+
+                        const img = document.createElement('img');
+                        img.src = imagePath;
+                        img.alt = skill.DisplayedName || 'Skill Icon'; // Use DisplayedName for alt text
+                        img.onerror = function() {
+                            // Optional: Handle broken image links
+                            console.warn(`Could not load image: ${imagePath}. This icon might not exist in your 'renamedpics' folder.`);
+                            this.style.display = 'none'; // Hide broken image icon
+                            // You could also replace it with a placeholder image
+                            // this.src = 'path/to/placeholder.png';
+                        };
+
+                        const descriptionP = document.createElement('p');
+                        descriptionP.textContent = skill.Description || 'No description available.'; // Use Description from JSON
+
+                        // Append elements in the desired order: title, image, description
+                        itemDiv.appendChild(nameH2);
+                        itemDiv.appendChild(img);
+                        itemDiv.appendChild(descriptionP);
+                        iconsContainer.appendChild(itemDiv);
+                    }
+                });
+
+            } catch (error) {
+                console.error('Error loading or parsing JSON:', error);
+                loadingMessage.textContent = 'Failed to load icons. Make sure ActiveSkills.json is in the same directory and contains valid JSON. Check console for details.';
+                loadingMessage.style.color = 'red';
+            }
+        });
+    </script>
+
+</body>
+</html>

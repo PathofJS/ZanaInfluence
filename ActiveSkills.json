@@ -1,0 +1,59 @@
+[
+  
+  {
+    "_index": 1840,
+    "Id": "zana_influence_memory_of_disbelief",
+    "DisplayedName": "Memory of Disbelief",
+    "Description": "Consumes Petals to cause affected nearby monsters to not be able to drop items that can have rarity. The number of Petals consumed is proportional to the Power of affected monsters.",
+    "Icon_DDSFile": "Art/2DArt/SkillIcons/MemoryIconMonsterNoDrops.dds"
+  },
+  {
+    "_index": 1841,
+    "Id": "zana_influence_memory_of_panic",
+    "DisplayedName": "Memory of Panic",
+    "Description": "Consumes Petals to cause affected monsters to revive on death, dropping loot and granting experience again. The number of Petals consumed is proportional to the Power of affected monsters. Does not affect Unique monsters.",
+    "Icon_DDSFile": "Art/2DArt/SkillIcons/MemoryIconMonsterRevive.dds"
+  },
+  {
+    "_index": 1842,
+    "Id": "zana_influence_memory_of_impatience",
+    "DisplayedName": "Memory of Impatience",
+    "Description": "Consumes Petals to extract Souls from nearby monsters. The number of Petals consumed is proportional to the Power of nearby monsters.",
+    "Icon_DDSFile": "Art/2DArt/SkillIcons/MemoryIconMonsterSouls.dds"
+  },
+  {
+    "_index": 1843,
+    "Id": "zana_influence_memory_of_familiarity",
+    "DisplayedName": "Memory of Familiarity",
+    "Description": "Consumes Petals to cause affected nearby monsters to have either 200% more item quantity or 90% less item quantity, and have all non-unique dropped items be of the same type. The number of Petals consumed is proportional to the Power of affected monsters.",
+    "Icon_DDSFile": "Art/2DArt/SkillIcons/MemoryIconMonsterSameItems.dds"
+  },
+  {
+    "_index": 1844,
+    "Id": "zana_influence_memory_of_impulsiveness",
+    "DisplayedName": "Memory of Impulsiveness",
+    "Description": "Consumes Petals to cause affected nearby monsters to have 200% increased Item Rarity and convert non-unique equipment items to Gold. The number of Petals consumed is proportional to the Power of affected monsters.",
+    "Icon_DDSFile": "Art/2DArt/SkillIcons/MemoryIconMonsterIncreasedItemRarity.dds"
+  },
+  {
+    "_index": 1845,
+    "Id": "zana_influence_memory_of_desire",
+    "DisplayedName": "Memory of Desire",
+    "Description": "Consumes Petals to cause affected nearby monsters to have a chance to gain bonus rewards and 100% increased Toughness. Higher rarity monsters have a higher chance to gain rewards. The number of Petals consumed is proportional to the Power of affected monsters.",
+    "Icon_DDSFile": "Art/2DArt/SkillIcons/MemoryIconMonsterRewards.dds"
+  },
+  {
+    "_index": 1846,
+    "Id": "zana_influence_memory_of_suspicion",
+    "DisplayedName": "Memory of Suspicion",
+    "Description": "Consumes Petals to cause affected nearby normal monsters to have a chance to be upgraded to magic or rare rarity.",
+    "Icon_DDSFile": "Art/2DArt/SkillIcons/MemoryIconMonsterUpgradeRarity.dds"
+  },
+  {
+    "_index": 1847,
+    "Id": "zana_influence_memory_of_mocking",
+    "DisplayedName": "Memory of Mocking",
+    "Description": "Consumes Petals to gain the modifiers of affected nearby magic and rare monsters for 30 seconds. The number of Petals consumed is proportional to the Power of affected monsters.",
+    "Icon_DDSFile": "Art/2DArt/SkillIcons/MemoryIconMonsterStealMods.dds"
+  }
+]
